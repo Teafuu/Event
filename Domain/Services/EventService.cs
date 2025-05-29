@@ -6,6 +6,7 @@ namespace Domain.Services;
 
 public class EventService(IBIEventClient BIClient, ICache cache) : IEventService
 {
+    private const int CACHE_DURATION_IN_HOURS = 1;
     public async Task<IEnumerable<Event>> GetEvents(
         string campus = "",
         string audience = "",
@@ -19,7 +20,7 @@ public class EventService(IBIEventClient BIClient, ICache cache) : IEventService
             return cachedEvents;
 
         var newEvents = await BIClient.GetEvents(campus, audience, count, language);
-        await cache.SetAsync(cacheKey, newEvents);
+        await cache.SetAsync(cacheKey, newEvents, TimeSpan.FromHours(CACHE_DURATION_IN_HOURS));
 
         return newEvents;
     }
