@@ -25,7 +25,7 @@ public class BIEventClient(HttpClient client) : IBIEventClient
 
         var query = new QueryBuilder(queryParams).ToQueryString();
 
-        var result = await client.GetAsync($"https://www.bi.no/api/calendar-events{query}");
+        var result = await client.GetAsync($"api/calendar-events{query}");
 
         result.EnsureSuccessStatusCode();
 

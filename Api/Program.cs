@@ -79,10 +79,10 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddHttpClient("BiApi", (sp, client) =>
+builder.Services.AddHttpClient(string.Empty, (sp, client) =>
 {
     var cfg = sp.GetRequiredService<IConfiguration>();
-    client.BaseAddress = new Uri(cfg["bi-api-uri"]!);
+    client.BaseAddress = new Uri(cfg["EventApi:Bi:Uri"]!);
 }); 
 
 builder.Services.AddScoped<IEventService, EventService>();
